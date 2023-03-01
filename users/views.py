@@ -57,7 +57,7 @@ class KaKaoSignInCallBackView(APIView):
         kakao_token_api = 'https://kauth.kakao.com/oauth/token'
         data = {
             'grant_type': 'authorization_code',
-            'client_id': '3771cfe21601a187a3ac6fae7057c7a5',
+            'client_id': '9c2ae003d16074d931b7184aef49825a',
             'redirection_uri': 'http://localhost:3000/oauth/callback/kakao',
             'code': auth_code
         }
