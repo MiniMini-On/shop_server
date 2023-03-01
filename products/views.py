@@ -28,10 +28,15 @@ class ProductView(APIView):
 """
 db값 추가
 """
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+import os
+ROOT_DIR = os.path.dirname(BASE_DIR)
+SECRET_BASE_FILE = os.path.join(BASE_DIR, 'oround_data.csv')
 
 def dbsaveView(request):
 
-    db = pd.read_csv('../oround_data.csv',encoding='cp949' )
+    db = pd.read_csv(SECRET_BASE_FILE,encoding='cp949' )
 
     for i in range(0,len(db)):
         name = db['name'][i].replace('#',',')
