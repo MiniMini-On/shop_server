@@ -45,7 +45,8 @@ def login(user, request):
     return res
 
 
-BASE_URL = 'http://localhost:8000/api/auth/'
+BASE_URL = f'{settings.BASE_URL}/api/auth/'
+
 
 class KaKaoSignInCallBackView(APIView):
     def post(self, request):
@@ -68,7 +69,7 @@ class KaKaoSignInCallBackView(APIView):
         user_info_response = requests.get('https://kapi.kakao.com/v2/user/me', headers={"Authorization": f'Bearer ${access_token}'})
         print(user_info_response.json())
         kakao_id = user_info_response.json()['id']
-        kakao_nick = user_info_response.json()['properties']['nickname']
+        # kakao_nick = user_info_response.json()['properties']['nickname']
         kakao_age = user_info_response.json()['kakao_account']['age_range']
         kakao_birthday = user_info_response.json()['kakao_account']['birthday']
         kakao_gender = user_info_response.json()['kakao_account']['gender']

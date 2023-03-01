@@ -26,8 +26,7 @@ for key, value in secrets.items():
     setattr(sys.modules[__name__], key, value)
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secrets['SECRET_KEY']
+
 
 
 # Quick-start development settings - unsuitable for production
