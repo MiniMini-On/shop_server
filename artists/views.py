@@ -10,7 +10,7 @@ db값 추가
 
 def dbsaveView(request):
 
-    db = pd.read_csv(r"C:\Users\PC\Desktop\crawling\oround\oround_data.csv",encoding='cp949' )
+    db = pd.read_csv('../oround_data.csv',encoding='cp949' )
 
     temp = []
     for i in range(0,120):
