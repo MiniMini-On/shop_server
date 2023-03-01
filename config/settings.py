@@ -28,7 +28,6 @@ for key, value in secrets.items():
 
 
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -174,7 +173,7 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
     "ALGORITHM": "HS256",
-    "SIGNING_KEY": SECRET_KEY,
+    "SIGNING_KEY": secrets['SECRET_KEY'],
     "VERIFYING_KEY": "",
     "AUDIENCE": None,
     "ISSUER": None,
