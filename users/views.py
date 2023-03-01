@@ -68,7 +68,7 @@ class KaKaoSignInCallBackView(APIView):
         user_info_response = requests.get('https://kapi.kakao.com/v2/user/me', headers={"Authorization": f'Bearer ${access_token}'})
         print(user_info_response.json())
         kakao_id = user_info_response.json()['id']
-        # kakao_nick = user_info_response.json()['properties']['nickname']
+        kakao_nick = user_info_response.json()['properties']['nickname']
         kakao_age = user_info_response.json()['kakao_account']['age_range']
         kakao_birthday = user_info_response.json()['kakao_account']['birthday']
         kakao_gender = user_info_response.json()['kakao_account']['gender']
@@ -85,8 +85,8 @@ class KaKaoSignInCallBackView(APIView):
             
         except User.DoesNotExist:
             # 기존에 가입된 유저가 없으면 새로 가입
-            random_nick = requests.get('https://nickname.hwanmoo.kr/?format=json&count=1')
-            new_user = User(uid = '1'+str(kakao_id), username=random_nick.json()['words'][0],age=kakao_age, birthday=kakao_birthday, gender=kakao_gender)
+            
+            new_user = User(uid = '1'+str(kakao_id), username=kakao_nick+str(kakao_id),age=kakao_age, birthday=kakao_birthday, gender=kakao_gender)
             new_user.save()
             print('register')
             user = User.objects.get(uid='1'+str(kakao_id))
