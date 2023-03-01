@@ -45,7 +45,6 @@ def login(user, request):
     return res
 
 
-BASE_URL = f'{settings.BASE_URL}/api/auth/'
 
 
 class KaKaoSignInCallBackView(APIView):

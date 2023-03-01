@@ -26,6 +26,8 @@ for key, value in secrets.items():
     setattr(sys.modules[__name__], key, value)
 
 
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = secrets['SECRET_KEY']
 
 
 # Quick-start development settings - unsuitable for production
@@ -173,7 +175,7 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
     "ALGORITHM": "HS256",
-    "SIGNING_KEY": secrets['SECRET_KEY'],
+    "SIGNING_KEY": SECRET_KEY,
     "VERIFYING_KEY": "",
     "AUDIENCE": None,
     "ISSUER": None,
