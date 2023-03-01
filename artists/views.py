@@ -4,6 +4,10 @@ import string
 from .models import Artist
 from django.http import HttpResponse
 
+"""
+db값 추가
+"""
+
 def dbsaveView(request):
 
     db = pd.read_csv(r"C:\Users\PC\Desktop\crawling\oround\oround_data.csv",encoding='cp949' )
