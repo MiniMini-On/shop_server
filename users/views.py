@@ -27,7 +27,6 @@ def login(user):
     tokens = get_tokens_for_user(user)
     res = Response()
     serializer = serializers.UserSerializer(user)
-
     res.data = tokens
     res.set_cookie(
         key=settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'],
