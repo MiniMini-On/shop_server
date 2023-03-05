@@ -31,6 +31,7 @@ def login(user):
     res.set_cookie(
         key=settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'],
         value=tokens["refresh"],
+        domain=settings.SIMPLE_JWT['AUTH_COOKIE_DOMAIN'], #배포시 주석
         expires=int(settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"].total_seconds()),
         secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
         httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
