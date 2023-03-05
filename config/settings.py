@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     #보안
     "corsheaders",
+    #전화번호
     'phone_field',
     #앱
     "addresses.apps.AddressesConfig",
@@ -207,18 +208,18 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 
     # custom
-    # 'AUTH_COOKIE': 'access',
+    'AUTH_COOKIE': 'access',
     # Cookie name. Enables cookies if value is set.
     'AUTH_COOKIE_REFRESH': 'refresh',
     # A string like "example.com", or None for standard domain cookie. 나중에 client domain 주소로 수정
     'AUTH_COOKIE_DOMAIN': None,
     # # Whether the auth cookies should be secure (https:// only).
-    'AUTH_COOKIE_SECURE': False, 
+    'AUTH_COOKIE_SECURE': True, 
     # # Http only cookie flag.It's not fetch by javascript.
-    # 'AUTH_COOKIE_HTTP_ONLY': True,
+    'AUTH_COOKIE_HTTP_ONLY': True,
     'AUTH_COOKIE_PATH': '/',        # The path of the auth cookie.
     # # Whether to set the flag restricting cookie leaks on cross-site requests. This can be 'Lax', 'Strict', or None to disable the flag.
-    'AUTH_COOKIE_SAMESITE': "None", # TODO: Modify to Lax
+    'AUTH_COOKIE_SAMESITE': 'None', # TODO: Modify to Lax
 }
 
 # CORS 관련 추가
@@ -227,16 +228,16 @@ CORS_ALLOW_CREDENTIALS = True #쿠키가 cross-site HTTP 요청에 포함될 수
 
 # CSRF_COOKIE_SECURE = True
 # CSRF_COOKIE_HTTPONLY = True
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    'https://frolicking-crepe-be7a88.netlify.app'
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+#     'https://frolicking-crepe-be7a88.netlify.app'
+# ]
 
 # CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
 
 #CSRF token을 session으로 관리함, 토큰 저장 안됨
-CSRF_USE_SESSIONS = True
+# CSRF_USE_SESSIONS = True
 
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SAMESITE = "None"

@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework import exceptions, decorators, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.middleware import csrf
-from django.conf import settings
+from config import settings
 from django.utils import timezone
 
 
@@ -22,7 +22,7 @@ def get_tokens_for_user(user):
         'access': str(refresh.access_token),
     }
     
-def login(user, request):
+def login(user):
 
     tokens = get_tokens_for_user(user)
     res = Response()
@@ -32,14 +32,14 @@ def login(user, request):
     res.set_cookie(
         key=settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'],
         value=tokens["refresh"],
-        expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
-        # secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-        # httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-        # samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+        expires=int(settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"].total_seconds()),
+        secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+        httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+        samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
     )
     res.data['username'] = serializer.data['username']
    
-    res.headers["X-CSRFToken"] = csrf.get_token(request)
+    
     
     
     return res
@@ -74,6 +74,7 @@ class KaKaoSignInCallBackView(APIView):
         kakao_gender = user_info_response.json()['kakao_account']['gender']
         print(kakao_id)
         try:
+            kakao_id= 2691675879
             user = User.objects.get(uid='1'+str(kakao_id))
             print(user)
             user.last_login = timezone.now()
@@ -81,7 +82,7 @@ class KaKaoSignInCallBackView(APIView):
             # auth_login(request,user)
             print('login')
             
-            return login(user, request)
+            return login(user)
             
         except User.DoesNotExist:
             # 기존에 가입된 유저가 없으면 새로 가입
@@ -91,7 +92,7 @@ class KaKaoSignInCallBackView(APIView):
             print('register')
             user = User.objects.get(uid='1'+str(kakao_id))
             # auth_login(request,user)
-            return login(user, request)
+            return login(user)
     
     
 @decorators.permission_classes([permissions.IsAuthenticated])
@@ -129,13 +130,10 @@ class LogoutView(APIView):
             token = RefreshToken(refreshToken)
             token.blacklist()
             res = Response()
-            # res.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE'])
-            # res.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE'])
             res.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
-            # res.delete_cookie("X-CSRFToken")
-            # res.delete_cookie("csrftoken")
-            res["X-CSRFToken"]=None
-            # auth_logout(request)
+            res.delete_cookie("X-CSRFToken")
+            res.delete_cookie("csrftoken")
+            # res["X-CSRFToken"]=None
             res.data = {'msg':"logout"}
                         
             return res
